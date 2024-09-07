@@ -6,7 +6,7 @@
         {
             "label": "Build & Run",
             "type": "shell",
-            "command": "./Build.sh",
+            "command": "./BuildAndRun.sh",
             "group": "build"
         }
     ]

@@ -9,6 +9,8 @@ link_directories(Dependencies/lib)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
-#target_link_libraries(${PROJECT_NAME} glfw3)
+target_include_directories(${PROJECT_NAME} PRIVATE Headers)
 
 target_link_libraries(${PROJECT_NAME} glfw3 "-framework Cocoa" "-framework OpenGL" "-framework IOKit")
+
+file(COPY Resources DESTINATION .)

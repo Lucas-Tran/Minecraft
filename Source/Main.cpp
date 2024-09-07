@@ -2,13 +2,19 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
+#include "stb_image.h"
+
 const char *vertexShaderSource =
 "#version 330 core\n"
 "\n"
 "layout (location = 0) in vec3 vertexPosition;\n"
+"layout (location = 1) in vec2 UVCoordinates;\n"
+"\n"
+"out vec2 fragUVCoordinates;\n"
 "\n"
 "void main() {\n"
 "   gl_Position = vec4(vertexPosition, 1.0f);\n"
+"   fragUVCoordinates = UVCoordinates;\n"
 "}";
 
 const char *fragmentShaderSource =
@@ -16,15 +22,19 @@ const char *fragmentShaderSource =
 "\n"
 "out vec4 fragColor;"
 "\n"
+"in vec2 fragUVCoordinates;\n"
+"\n"
+"uniform sampler2D texture_0;\n"
+"\n"
 "void main() {\n"
-"   fragColor = vec4(1.0f, 0.5f, 1.0f, 0.5f);\n"
+"   fragColor = texture(texture_0, fragUVCoordinates);//vec4(1.0f, 0.5f, 1.0f, 0.5f);\n"
 "}";
 
 float vertices[] = {
-    -0.5f, -0.5f, 0.0f,
-    0.5f, -0.5f, 0.0f,
-    0.5f, 0.5f, 0.0f,
-    -0.5f, 0.5f, 0.0f
+    -0.5f, -0.5f,  0.0f,        0.0f, 0.0f,
+     0.5f, -0.5f,  0.0f,        1.0f, 0.0f,
+     0.5f,  0.5f,  0.0f,        1.0f, 1.0f,
+    -0.5f,  0.5f,  0.0f,        0.0f, 1.0f,
 };
 
 unsigned int elements[] = {
@@ -90,25 +100,81 @@ int main() {
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(elements), elements, GL_STATIC_DRAW);
 
     glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void *) 0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(0));
+
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void *)(3 * sizeof(float)));
     
     glBindVertexArray(0);
+
+
+    // JUST TRYING TO BE FUNNY
+
+
+    unsigned int dancingTexture;
+    glGenTextures(1, &dancingTexture);
+    glBindTexture(GL_TEXTURE_2D, dancingTexture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    int width, height, channelCount;
+    stbi_set_flip_vertically_on_load(true);
+    unsigned char *imageData = stbi_load("Resources/Textures/Dancing.png", &width, &height, &channelCount, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    stbi_image_free(imageData);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+
+    unsigned int jumpingTexture;
+    glGenTextures(1, &jumpingTexture);
+    glBindTexture(GL_TEXTURE_2D, jumpingTexture);
+
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    
+    stbi_set_flip_vertically_on_load(true);
+    imageData = stbi_load("Resources/Textures/Jumping.png", &width, &height, &channelCount, 0);
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, imageData);
+    glGenerateMipmap(GL_TEXTURE_2D);
+    stbi_image_free(imageData);
+    glBindTexture(GL_TEXTURE_2D, 0);
+
+
+    glUseProgram(shaderProgram);
+
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, dancingTexture);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, jumpingTexture);
 
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
     
+
     glClear(GL_COLOR_BUFFER_BIT);
 
-    glUseProgram(shaderProgram);
-
+    glUniform1i(glGetUniformLocation(shaderProgram, "texture_0"), 0);
     glBindVertexArray(VAO);
-    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, (void *)(0));
     glBindVertexArray(0);
+
+    glUniform1i(glGetUniformLocation(shaderProgram, "texture_0"), 1);
+    glBindVertexArray(VAO);
+    glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, (void *)(3 * sizeof(unsigned int)));
+    glBindVertexArray(0);
+
     glfwSwapBuffers(window);
 
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
     }
+
     glDeleteProgram(shaderProgram);
     glDeleteBuffers(1, &VBO);
     glDeleteBuffers(1, &EBO);
