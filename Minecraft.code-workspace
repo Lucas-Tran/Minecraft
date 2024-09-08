@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": ".vscode"
+		},
+		{
+			"path": "Resources"
+		},
+		{
+			"path": "Source"
+		},
+		{
+			"path": "Headers"
+		}
+	],
+	"settings": {
+		"terminal.integrated.cwd": "${workspaceFolder}/.."
+	}
+}
