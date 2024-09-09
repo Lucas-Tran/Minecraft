@@ -130,19 +130,15 @@ int main() {
 
     VAO::Unbind();
 
-    // JUST TRYING TO BE FUNNY
-
-    Texture2D dancingTexture("Dancing.png", GL_REPEAT, GL_REPEAT, GL_LINEAR, GL_LINEAR);
-    Texture2D jumpingTexture("Jumping.png", GL_REPEAT, GL_REPEAT, GL_LINEAR, GL_LINEAR);
-
 
     shaderProgram.Use();
-
-    dancingTexture.BindWithSlot(GL_TEXTURE0);
-    jumpingTexture.BindWithSlot(GL_TEXTURE1);
     
-    shaderProgram.SetUniform("texture_0", 0);
-    shaderProgram.SetUniform("lightDirection", glm::normalize(glm::vec3(-1.0f)));
+    shaderProgram.SetUniform("directionalLight.direction", glm::normalize(glm::vec3(-1.0f)));
+    shaderProgram.SetUniform("directionalLight.color", glm::vec3(1.0f));
+
+    shaderProgram.SetUniform("directionalLight.ambientIntensity", 0.2f);
+    shaderProgram.SetUniform("directionalLight.diffuseIntensity", 0.8f);
+    shaderProgram.SetUniform("directionalLight.specularIntensity", 0.5f);
 
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -156,6 +152,8 @@ int main() {
 
         camera.UpdateProjectionMatrix();
         camera.Update();
+
+        shaderProgram.SetUniform("viewPosition", camera.GetPosition());
 
         EngineProcessor::TickPostProcess();
 

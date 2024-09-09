@@ -18,6 +18,8 @@ public:
 
     void Update();
 
+    glm::vec3 GetPosition();
+
 
 private:
     glm::vec3 position;

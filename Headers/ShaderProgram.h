@@ -16,9 +16,8 @@ public:
     void Use();
 
     void SetUniform(const char* uniformName, int value);
-
+    void SetUniform(const char* uniformName, float value);
     void SetUniform(const char* uniformName, glm::mat4 value);
-
     void SetUniform(const char* uniformName, glm::vec3 value);
     
 

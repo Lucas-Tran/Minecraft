@@ -23,6 +23,11 @@ void ShaderProgram::SetUniform(const char* uniformName, int value) {
     glUniform1i(uniformLocation, value);
 }
 
+void ShaderProgram::SetUniform(const char* uniformName, float value) {
+    unsigned int uniformLocation = glGetUniformLocation(this->ID, uniformName);
+    glUniform1f(uniformLocation, value);
+}
+
 void ShaderProgram::SetUniform(const char* uniformName, glm::mat4 value) {
     unsigned int uniformLocation = glGetUniformLocation(this->ID, uniformName);
     glUniformMatrix4fv(uniformLocation, 1, GL_FALSE, glm::value_ptr(value));

@@ -77,3 +77,7 @@ void Camera::Update() {
 
     UpdateViewMatrix();
 }
+
+glm::vec3 Camera::GetPosition() {
+    return this->position;
+}
