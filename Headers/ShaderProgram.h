@@ -3,6 +3,7 @@
 
 #include <string>
 #include <glm/glm.hpp>
+#include "ShaderProgramBuilder.h"
 
 class ShaderProgram {
 public:
@@ -10,11 +11,15 @@ public:
 
     ~ShaderProgram();
 
+    bool GetSuccess();
+
     void Use();
 
-    void SetUniformInteger(const char* uniformName, int value);
+    void SetUniform(const char* uniformName, int value);
 
-    void SetUniformMatrix4(const char* uniformName, glm::mat4 value);
+    void SetUniform(const char* uniformName, glm::mat4 value);
+
+    void SetUniform(const char* uniformName, glm::vec3 value);
     
 
 private:

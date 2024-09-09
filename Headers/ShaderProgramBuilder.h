@@ -5,6 +5,8 @@
 #include <glad/glad.h>
 
 namespace ShaderProgramBuilder {
+    extern std::string errorLog;
+    
     unsigned int CompileShader(std::string source, GLenum type);
 
     unsigned int BuildShaderProgram(std::string shaderName);

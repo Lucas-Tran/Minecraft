@@ -2,10 +2,14 @@
 
 out vec4 fragColor;
 
-in vec2 fragUVCoordinates;
+in vec3 outColor;
+in vec3 normal;
 
 uniform sampler2D texture_0;
 
+uniform vec3 lightDirection;
+
 void main() {
-   fragColor = texture(texture_0, fragUVCoordinates);//vec4(1.0f, 0.5f, 1.0f, 0.5f);
+   float intensity = max(0.0f, dot(normal, -lightDirection));
+   fragColor = vec4(outColor * intensity, 1.0f);
 }

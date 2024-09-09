@@ -6,6 +6,7 @@ const float SPEED = 5.0f;
 Camera::Camera(glm::vec3 position, float pitch, float yaw, float FOV, float near, float far): position(position), pitch(pitch), yaw(yaw), FOV(FOV), near(near), far(far) {
     this->UpdateDirectionVectors();
     this->UpdateViewMatrix();
+    Input::EnablePointerLock();
 }
 
 void Camera::UpdateDirectionVectors() {
