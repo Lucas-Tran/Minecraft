@@ -10,47 +10,50 @@
 
 #include "EngineProcessor.h"
 
+#include "Light.h"
 
-float vertices[] = {
-    -0.5f, -0.5f,  0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  0.0f,  1.0f,
-     0.5f, -0.5f,  0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  0.0f,  1.0f,
-     0.5f,  0.5f,  0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  0.0f,  1.0f,
-    -0.5f,  0.5f,  0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  0.0f,  1.0f,
+#include "Mesh.h"
 
-
-    -0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,         -1.0f,  0.0f,  0.0f,
-    -0.5f, -0.5f,  0.5f,        1.0f, 0.0f, 0.0f,         -1.0f,  0.0f,  0.0f,
-    -0.5f,  0.5f,  0.5f,        1.0f, 0.0f, 0.0f,         -1.0f,  0.0f,  0.0f,
-    -0.5f,  0.5f, -0.5f,        1.0f, 0.0f, 0.0f,         -1.0f,  0.0f,  0.0f,
+std::vector<Vertex> vertices = {
+    {glm::vec3(-0.5f, -0.5f,  0.5f),        glm::vec2(0.0f, 0.0f),         glm::vec3( 0.0f,  0.0f,  1.0f)},
+    {glm::vec3( 0.5f, -0.5f,  0.5f),        glm::vec2(1.0f, 0.0f),         glm::vec3( 0.0f,  0.0f,  1.0f)},
+    {glm::vec3( 0.5f,  0.5f,  0.5f),        glm::vec2(1.0f, 1.0f),         glm::vec3( 0.0f,  0.0f,  1.0f)},
+    {glm::vec3(-0.5f,  0.5f,  0.5f),        glm::vec2(0.0f, 1.0f),         glm::vec3( 0.0f,  0.0f,  1.0f)},
 
 
-     0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  0.0f, -1.0f,
-    -0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  0.0f, -1.0f,
-    -0.5f,  0.5f, -0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  0.0f, -1.0f,
-     0.5f,  0.5f, -0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  0.0f, -1.0f,
+    {glm::vec3(-0.5f, -0.5f, -0.5f),        glm::vec2(0.0f, 0.0f),         glm::vec3(-1.0f,  0.0f,  0.0f)},
+    {glm::vec3(-0.5f, -0.5f,  0.5f),        glm::vec2(1.0f, 0.0f),         glm::vec3(-1.0f,  0.0f,  0.0f)},
+    {glm::vec3(-0.5f,  0.5f,  0.5f),        glm::vec2(1.0f, 1.0f),         glm::vec3(-1.0f,  0.0f,  0.0f)},
+    {glm::vec3(-0.5f,  0.5f, -0.5f),        glm::vec2(0.0f, 1.0f),         glm::vec3(-1.0f,  0.0f,  0.0f)},
 
 
-     0.5f, -0.5f,  0.5f,        1.0f, 0.0f, 0.0f,          1.0f,  0.0f,  0.0f,
-     0.5f, -0.5f, -0.5f,        1.0f, 0.0f, 0.0f,          1.0f,  0.0f,  0.0f,
-     0.5f,  0.5f, -0.5f,        1.0f, 0.0f, 0.0f,          1.0f,  0.0f,  0.0f,
-     0.5f,  0.5f,  0.5f,        1.0f, 0.0f, 0.0f,          1.0f,  0.0f,  0.0f,
+    {glm::vec3( 0.5f, -0.5f, -0.5f),        glm::vec2(0.0f, 0.0f),         glm::vec3( 0.0f,  0.0f, -1.0f)},
+    {glm::vec3(-0.5f, -0.5f, -0.5f),        glm::vec2(1.0f, 0.0f),         glm::vec3( 0.0f,  0.0f, -1.0f)},
+    {glm::vec3(-0.5f,  0.5f, -0.5f),        glm::vec2(1.0f, 1.0f),         glm::vec3( 0.0f,  0.0f, -1.0f)},
+    {glm::vec3( 0.5f,  0.5f, -0.5f),        glm::vec2(0.0f, 1.0f),         glm::vec3( 0.0f,  0.0f, -1.0f)},
 
 
-    -0.5f,  0.5f,  0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  1.0f,  0.0f,
-     0.5f,  0.5f,  0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  1.0f,  0.0f,
-     0.5f,  0.5f, -0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  1.0f,  0.0f,
-    -0.5f,  0.5f, -0.5f,        1.0f, 0.0f, 0.0f,          0.0f,  1.0f,  0.0f,
+    {glm::vec3( 0.5f, -0.5f,  0.5f),        glm::vec2(0.0f, 0.0f),         glm::vec3( 1.0f,  0.0f,  0.0f)},
+    {glm::vec3( 0.5f, -0.5f, -0.5f),        glm::vec2(1.0f, 0.0f),         glm::vec3( 1.0f,  0.0f,  0.0f)},
+    {glm::vec3( 0.5f,  0.5f, -0.5f),        glm::vec2(1.0f, 1.0f),         glm::vec3( 1.0f,  0.0f,  0.0f)},
+    {glm::vec3( 0.5f,  0.5f,  0.5f),        glm::vec2(0.0f, 1.0f),         glm::vec3( 1.0f,  0.0f,  0.0f)},
 
 
-     0.5f,  -0.5f,  0.5f,       1.0f, 0.0f, 0.0f,          0.0f, -1.0f,  0.0f,
-    -0.5f,  -0.5f,  0.5f,       1.0f, 0.0f, 0.0f,          0.0f, -1.0f,  0.0f,
-    -0.5f,  -0.5f, -0.5f,       1.0f, 0.0f, 0.0f,          0.0f, -1.0f,  0.0f,
-     0.5f,  -0.5f, -0.5f,       1.0f, 0.0f, 0.0f,          0.0f, -1.0f,  0.0f
+    {glm::vec3(-0.5f,  0.5f,  0.5f),        glm::vec2(0.0f, 0.0f),         glm::vec3( 0.0f,  1.0f,  0.0f)},
+    {glm::vec3( 0.5f,  0.5f,  0.5f),        glm::vec2(1.0f, 0.0f),         glm::vec3( 0.0f,  1.0f,  0.0f)},
+    {glm::vec3( 0.5f,  0.5f, -0.5f),        glm::vec2(1.0f, 1.0f),         glm::vec3( 0.0f,  1.0f,  0.0f)},
+    {glm::vec3(-0.5f,  0.5f, -0.5f),        glm::vec2(0.0f, 1.0f),         glm::vec3( 0.0f,  1.0f,  0.0f)},
+
+
+    {glm::vec3( 0.5f,  -0.5f,  0.5f),       glm::vec2(0.0f, 0.0f),         glm::vec3( 0.0f, -1.0f,  0.0f)},
+    {glm::vec3(-0.5f,  -0.5f,  0.5f),       glm::vec2(1.0f, 0.0f),         glm::vec3( 0.0f, -1.0f,  0.0f)},
+    {glm::vec3(-0.5f,  -0.5f, -0.5f),       glm::vec2(1.0f, 1.0f),         glm::vec3( 0.0f, -1.0f,  0.0f)},
+    {glm::vec3( 0.5f,  -0.5f, -0.5f),       glm::vec2(0.0f, 1.0f),         glm::vec3( 0.0f, -1.0f,  0.0f)}
 };
 
-#define STRIDE 9
+#define STRIDE 8
 
-unsigned int elements[] = {
+std::vector<unsigned int> elements = {
     0, 1, 2,
     0, 2, 3,
 
@@ -73,6 +76,14 @@ unsigned int elements[] = {
 
     20, 21, 22,
     20, 22, 23
+};
+
+glm::vec3 cubePositions[] = {
+    glm::vec3(0.0f, 0.0f, 0.0f),
+    glm::vec3(-2.0f, 2.0f, -3.0f),
+    glm::vec3(4.0f, 1.0f, -9.0f),
+    glm::vec3(8.0f, 3.0f, 4.0f),
+    glm::vec3(4.0f, 2.0f, 0.0f)
 };
 
 const int WINDOW_WIDTH = 700, WINDOW_HEIGHT = 500;
@@ -117,32 +128,67 @@ int main() {
         return -1;
     }
 
-
-    VAO VAO;
-
-    VBO VBO(vertices, sizeof(vertices));
-
-    EBO EBO(elements, sizeof(elements));
-
-    VAO.SetVertexAttribute(0, 3, STRIDE, 0);
-    VAO.SetVertexAttribute(1, 3, STRIDE, 3);
-    VAO.SetVertexAttribute(2, 3, STRIDE, 6);
-
-    VAO::Unbind();
+    Mesh mesh(vertices, elements);
 
 
     shaderProgram.Use();
-    
-    shaderProgram.SetUniform("directionalLight.direction", glm::normalize(glm::vec3(-1.0f)));
-    shaderProgram.SetUniform("directionalLight.color", glm::vec3(1.0f));
 
-    shaderProgram.SetUniform("directionalLight.ambientIntensity", 0.2f);
-    shaderProgram.SetUniform("directionalLight.diffuseIntensity", 0.8f);
-    shaderProgram.SetUniform("directionalLight.specularIntensity", 0.5f);
+    Light::DirectionalLight directionalLight;
+
+    directionalLight.direction = glm::normalize(glm::vec3(-1.0f));
+
+    directionalLight.color = glm::normalize(glm::vec3(1.0f));
+
+    directionalLight.ambientIntensity = 0.3f;
+    directionalLight.diffuseIntensity = 1.4f;
+    directionalLight.specularIntensity = 2.0f;
+
+    Light::UniformLight(shaderProgram, directionalLight);
+
+    Light::PointLight pointLight;
+
+    pointLight.position = glm::vec3(10.0f, 5.0f, 4.0f);
+
+    pointLight.color = glm::vec3(1.0f);
+
+    pointLight.ambientIntensity = 0.1f;
+    pointLight.diffuseIntensity = 0.6f;
+    pointLight.specularIntensity = 1.2f;
+
+    pointLight.quadratic = 0.1f;
+    pointLight.linear = 0.2f;
+    pointLight.constant = 0.3f;
+
+    Light::UniformLight(shaderProgram, 0U, pointLight);
+
+    Light::SpotLight spotLight;
+
+    spotLight.position = glm::vec3(-1.0f, 0, 0);
+    spotLight.direction = glm::vec3(1.0f, 0, 0);
+
+    spotLight.innerCutOffDegrees = 10.0f;
+    spotLight.outerCutOffDegrees = 15.0f;
+
+    spotLight.color = glm::vec3(1.0f);
+
+    spotLight.ambientIntensity = 0.1f;
+    spotLight.diffuseIntensity = 0.4f;
+    spotLight.specularIntensity = 1.0f;
+
+    spotLight.quadratic = 0.01f;
+    spotLight.linear = 0.03f;
+    spotLight.constant = 0.05f;
+
+    Light::UniformLight(shaderProgram, 0U, spotLight);
+
+    Texture2D texture("Dancing.png", GL_REPEAT, GL_REPEAT, GL_LINEAR_MIPMAP_LINEAR, GL_LINEAR);
+
+    texture.BindWithSlot(GL_TEXTURE0);
+
+    shaderProgram.SetUniform("texture_0", 0);
 
 
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-
 
 
     while (!glfwWindowShouldClose(window)) {
@@ -158,18 +204,17 @@ int main() {
         EngineProcessor::TickPostProcess();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-        glm::mat4 model;
-        model = glm::rotate(model, Time::time, glm::vec3(0.0f, 1.0f, 0.0f));
         
 
-        shaderProgram.SetUniform("model", model);
         shaderProgram.SetUniform("view", camera.GetViewMatrix());
         shaderProgram.SetUniform("projection", camera.GetProjectionMatrix());
 
-        VAO.Bind();
-        glDrawElements(GL_TRIANGLES, 36, GL_UNSIGNED_INT, (void *)(0));
-        VAO::Unbind();
+        for (unsigned int i = 0; i < 5; i++) {
+            glm::mat4 model;
+            model = glm::translate(model, cubePositions[i]);
+            shaderProgram.SetUniform("model", model);
+            mesh.Draw();
+        }
 
         glfwSwapBuffers(window);
     }

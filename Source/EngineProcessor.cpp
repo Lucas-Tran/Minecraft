@@ -2,22 +2,21 @@
 
 #include <GLFW/glfw3.h>
 
-double lastMouseX;
-double lastMouseY;
-float previousTime;
-
 void EngineProcessor::Init() {
-    glfwGetCursorPos(window, &lastMouseX, &lastMouseY);
+    glfwGetCursorPos(window, &Input::mouseX, &Input::mouseY);
 
-    previousTime = glfwGetTime();
+    Time::time = glfwGetTime();
 }
 
 void EngineProcessor::TickPreProcess() {
+    double previousTime = Time::time;
     Time::time = glfwGetTime();
     Time::deltaTime = Time::time - previousTime;
     previousTime = Time::time;
 
 
+    double lastMouseX = Input::mouseX;
+    double lastMouseY = Input::mouseY;
     glfwGetCursorPos(window, &Input::mouseX, &Input::mouseY);
     Input::mouseChangeX = Input::mouseX - lastMouseX;
     Input::mouseChangeY = Input::mouseY - lastMouseY;
@@ -38,6 +37,4 @@ void EngineProcessor::TickPreProcess() {
 }
 
 void EngineProcessor::TickPostProcess() {
-    lastMouseX = Input::mouseX;
-    lastMouseY = Input::mouseY;
 }

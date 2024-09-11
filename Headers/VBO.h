@@ -1,9 +1,11 @@
 #ifndef VBO_H
 #define VBO_H
 
+#include "Engine.h"
+
 class VBO {
 public:
-    VBO(float *vertices, unsigned int size);
+    VBO(std::vector<Vertex> &vertices);
 
     ~VBO();
 

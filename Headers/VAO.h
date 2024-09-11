@@ -1,6 +1,8 @@
 #ifndef VAO_H
 #define VAO_H
 
+#include "Engine.h"
+
 class VAO {
 public:
     VAO();
@@ -11,7 +13,8 @@ public:
 
     static void Unbind();
 
-    static void SetVertexAttribute(unsigned int location, unsigned int size, unsigned int stride, unsigned int depth);
+    static void SetAttributeFormat();
+
 
 
 private:

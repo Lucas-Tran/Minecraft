@@ -24,3 +24,9 @@ Navigate to the project with terminal and type "./BuildAndRun" in terminal. You 
 
 ## Changelog:
 * Version 1.0: Simple Quadrillateral on screen
+* Version 1.1: Added image textures
+* Version 1.2: Reorganized
+* Version 1.3: Added transformations and 3D
+* Version 1.4: Added simple directional lighting
+* Version 1.5: Added more complex directional lighting
+* Version 1.6: Added different types of light and mesh class

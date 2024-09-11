@@ -2,10 +2,10 @@
 
 #include <glad/glad.h>
 
-EBO::EBO(unsigned int *elements, unsigned int size) {
+EBO::EBO(std::vector<unsigned int> &elements) {
     glGenBuffers(1, &this->ID);
     this->Bind();
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, elements, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, elements.size() * sizeof(unsigned int), &elements[0], GL_STATIC_DRAW);
 }
 
 EBO::~EBO() {

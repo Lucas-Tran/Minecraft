@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
@@ -33,5 +34,11 @@ namespace Time {
     extern float time;
     extern float deltaTime;
 }
+
+struct Vertex {
+    glm::vec3 position;
+    glm::vec2 textureCoordinates;
+    glm::vec3 normal;
+};
 
 #endif

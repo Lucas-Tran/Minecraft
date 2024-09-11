@@ -19,6 +19,7 @@ public:
     void Update();
 
     glm::vec3 GetPosition();
+    glm::vec3 GetForwardVector();
 
 
 private:

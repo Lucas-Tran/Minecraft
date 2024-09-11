@@ -1,9 +1,11 @@
 #ifndef EBO_H
 #define EBO_H
 
+#include "Engine.h"
+
 class EBO {
 public:
-    EBO(unsigned int *elements, unsigned int size);
+    EBO(std::vector<unsigned int> &elements);
 
     ~EBO();
 

@@ -2,6 +2,9 @@ cmake_minimum_required(VERSION 3.0)
 
 project(Minecraft VERSION 1.0)
 
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_C_STANDARD 17)
+
 file(GLOB_RECURSE SOURCES Source/*.cpp Source/*.c)
 
 include_directories(Dependencies/include)

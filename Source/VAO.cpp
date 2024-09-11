@@ -1,6 +1,7 @@
 #include "VAO.h"
 
 #include <glad/glad.h>
+#include <cstddef>
 
 
 VAO::VAO() {
@@ -20,7 +21,13 @@ void VAO::Unbind() {
     glBindVertexArray(0);
 }
 
-void VAO::SetVertexAttribute(unsigned int location, unsigned int size, unsigned int stride, unsigned int depth) {
-    glEnableVertexAttribArray(location);
-    glVertexAttribPointer(location, size, GL_FLOAT, GL_FALSE, stride * sizeof(float), (void *)(depth * sizeof(float)));
+void VAO::SetAttributeFormat() {
+    glEnableVertexAttribArray(0);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, position));
+
+    glEnableVertexAttribArray(1);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, textureCoordinates));
+
+    glEnableVertexAttribArray(2);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void *)offsetof(Vertex, normal));
 }

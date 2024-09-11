@@ -81,3 +81,7 @@ void Camera::Update() {
 glm::vec3 Camera::GetPosition() {
     return this->position;
 }
+
+glm::vec3 Camera::GetForwardVector() {
+    return this->forward;
+}
