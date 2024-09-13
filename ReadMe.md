@@ -30,3 +30,5 @@ Navigate to the project with terminal and type "./BuildAndRun" in terminal. You 
 * Version 1.4: Added simple directional lighting
 * Version 1.5: Added more complex directional lighting
 * Version 1.6: Added different types of light and mesh class
+* Version 1.7: Added static and dynamic meshes
+* Version 1.8: Added Basic chunks

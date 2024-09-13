@@ -53,8 +53,8 @@ in vec2 fragmentTextureCoordinates;
 
 
 uniform DirectionalLight directionalLight;
-uniform PointLight pointLights[POINT_LIGHTS];
-uniform SpotLight spotLights[SPOT_LIGHTS];
+//uniform PointLight pointLights[POINT_LIGHTS];
+//uniform SpotLight spotLights[SPOT_LIGHTS];
 
 uniform sampler2D texture_0;
 
@@ -68,8 +68,8 @@ void main() {
    vec3 fragmentColor = vec3(texture(texture_0, fragmentTextureCoordinates));
    vec3 viewDirection = normalize(viewPosition - fragmentPosition);
    vec3 result = CalculateDirectionalLight(directionalLight, viewDirection, fragmentColor);
-   result += CalculatePointLight(pointLights[0], viewDirection, fragmentColor);
-   result += CalculateSpotLight(spotLights[0], viewDirection, fragmentColor);
+   //result += CalculatePointLight(pointLights[0], viewDirection, fragmentColor);
+   //result += CalculateSpotLight(spotLights[0], viewDirection, fragmentColor);
    outfragmentColor = vec4(result, 1.0f);
 }
 
