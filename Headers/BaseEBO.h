@@ -1,20 +1,18 @@
-#ifndef VBO_H
-#define VBO_H
+#ifndef BASE_EBO_H
+#define BASE_EBO_H
 
 #include "Engine.h"
 
-class VBO {
+class BaseEBO {
 public:
-    VBO(std::vector<Vertex> &vertices);
-
-    ~VBO();
+    ~BaseEBO();
 
     void Bind();
 
     static void Unbind();
 
 
-private:
+protected:
     unsigned int ID;
 };
 

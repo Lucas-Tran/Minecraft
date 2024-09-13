@@ -1,9 +1,5 @@
 #include "ShaderProgram.h"
 
-#include "VBO.h"
-#include "EBO.h"
-#include "VAO.h"
-
 #include "Texture2D.h"
 
 #include "Camera.h"
@@ -12,9 +8,9 @@
 
 #include "Light.h"
 
-#include "Mesh.h"
+#include "StaticMesh.h"
 
-std::vector<Vertex> vertices = {
+const Vertex vertices[] = {
     {glm::vec3(-0.5f, -0.5f,  0.5f),        glm::vec2(0.0f, 0.0f),         glm::vec3( 0.0f,  0.0f,  1.0f)},
     {glm::vec3( 0.5f, -0.5f,  0.5f),        glm::vec2(1.0f, 0.0f),         glm::vec3( 0.0f,  0.0f,  1.0f)},
     {glm::vec3( 0.5f,  0.5f,  0.5f),        glm::vec2(1.0f, 1.0f),         glm::vec3( 0.0f,  0.0f,  1.0f)},
@@ -53,7 +49,7 @@ std::vector<Vertex> vertices = {
 
 #define STRIDE 8
 
-std::vector<unsigned int> elements = {
+const unsigned int elements[] = {
     0, 1, 2,
     0, 2, 3,
 
@@ -78,7 +74,7 @@ std::vector<unsigned int> elements = {
     20, 22, 23
 };
 
-glm::vec3 cubePositions[] = {
+const glm::vec3 cubePositions[] = {
     glm::vec3(0.0f, 0.0f, 0.0f),
     glm::vec3(-2.0f, 2.0f, -3.0f),
     glm::vec3(4.0f, 1.0f, -9.0f),
@@ -128,7 +124,7 @@ int main() {
         return -1;
     }
 
-    Mesh mesh(vertices, elements);
+    StaticMesh mesh(vertices, sizeof(vertices), elements, sizeof(elements));
 
 
     shaderProgram.Use();
