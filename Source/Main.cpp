@@ -8,7 +8,7 @@
 
 #include "Light.h"
 
-#include "StaticMesh.h"
+#include "DynamicMesh.h"
 
 const Vertex vertices[] = {
     {glm::vec3(-0.5f, -0.5f,  0.5f),        glm::vec2(0.0f, 0.0f),         glm::vec3( 0.0f,  0.0f,  1.0f)},
@@ -110,7 +110,7 @@ int main() {
     gladLoadGL();
     
     glEnable(GL_DEPTH_TEST);
-    glEnable(GL_CULL_FACE);
+    //glEnable(GL_CULL_FACE);
 
     EngineProcessor::Init();
 
@@ -124,7 +124,14 @@ int main() {
         return -1;
     }
 
-    StaticMesh mesh(vertices, sizeof(vertices), elements, sizeof(elements));
+    DynamicMesh mesh;
+    for (unsigned int i = 0; i < 24; i++) {
+        mesh.vertices.push_back(vertices[i]);
+    }
+    for (unsigned int i = 0; i < 36; i++) {
+        mesh.elements.push_back(elements[i]);
+    }
+    mesh.UpdateBuffers();
 
 
     shaderProgram.Use();
