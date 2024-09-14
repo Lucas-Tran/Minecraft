@@ -12,7 +12,6 @@ std::string ReadFile(std::string path) {
     std::stringstream stringStream;
     stringStream << fileStream.rdbuf();
     fileStream.close();
-
     std::string contents = stringStream.str();
 
     return contents;
