@@ -28,7 +28,7 @@ void Camera::UpdateViewMatrix() {
 
 void Camera::UpdateProjectionMatrix() {
     int width, height;
-    glfwGetWindowSize(window, &width, &height);
+    glfwGetWindowSize(Window::window, &width, &height);
     this->projection = glm::perspective(glm::radians(this->FOV), (float)width/height, this->near, this->far);
 }
 

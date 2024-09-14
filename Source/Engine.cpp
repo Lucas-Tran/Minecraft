@@ -1,6 +1,10 @@
 #include "Engine.h"
 
-GLFWwindow *window;
+GLFWwindow *Window::window;
+
+void Window::SetWindowCaption(std::string caption) {
+    glfwSetWindowTitle(window, caption.c_str());
+}
 
 
 KeyStatus Input::keys[1024];
@@ -12,20 +16,21 @@ double Input::mouseChangeY;
 
 float Time::time;
 float Time::deltaTime;
+unsigned int Time::FPS;
 
 
 void Input::EnablePointerLock() {
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 
 void Input::DisablePointerLock() {
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+    glfwSetInputMode(Window::window, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
     mouseChangeX = 0.0f;
     mouseChangeY = 0.0f;
-    glfwGetCursorPos(window, &mouseX, &mouseY);
+    glfwGetCursorPos(Window::window, &mouseX, &mouseY);
 }
 
 bool Input::IsPointerLocked() {
-    return glfwGetInputMode(window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED;
+    return glfwGetInputMode(Window::window, GLFW_CURSOR) == GLFW_CURSOR_DISABLED;
 }

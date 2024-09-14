@@ -10,7 +10,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 
 
-extern GLFWwindow *window;
+namespace Window {
+    extern GLFWwindow *window;
+    void SetWindowCaption(std::string caption);
+}
 
 struct KeyStatus {
     bool pressed;
@@ -33,6 +36,7 @@ namespace Input {
 namespace Time {
     extern float time;
     extern float deltaTime;
+    extern unsigned int FPS;
 }
 
 struct Vertex {

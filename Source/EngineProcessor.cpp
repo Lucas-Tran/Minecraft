@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 
 void EngineProcessor::Init() {
-    glfwGetCursorPos(window, &Input::mouseX, &Input::mouseY);
+    glfwGetCursorPos(Window::window, &Input::mouseX, &Input::mouseY);
 
     Time::time = glfwGetTime();
 }
@@ -12,17 +12,18 @@ void EngineProcessor::TickPreProcess() {
     double previousTime = Time::time;
     Time::time = glfwGetTime();
     Time::deltaTime = Time::time - previousTime;
+    Time::FPS = round(1 / Time::deltaTime);
     previousTime = Time::time;
 
 
     double lastMouseX = Input::mouseX;
     double lastMouseY = Input::mouseY;
-    glfwGetCursorPos(window, &Input::mouseX, &Input::mouseY);
+    glfwGetCursorPos(Window::window, &Input::mouseX, &Input::mouseY);
     Input::mouseChangeX = Input::mouseX - lastMouseX;
     Input::mouseChangeY = Input::mouseY - lastMouseY;
 
     for (unsigned int i = 0; i < 1024; i++) {
-        if (glfwGetKey(window, i) == GLFW_PRESS) {
+        if (glfwGetKey(Window::window, i) == GLFW_PRESS) {
             if (Input::keys[i].pressed) {
                 Input::keys[i].firstPress = false;
             } else {
@@ -34,7 +35,4 @@ void EngineProcessor::TickPreProcess() {
             Input::keys[i].firstPress = false;
         }
     }
-}
-
-void EngineProcessor::TickPostProcess() {
 }

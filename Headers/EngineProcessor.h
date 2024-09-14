@@ -6,7 +6,6 @@
 namespace EngineProcessor {
     void Init();
     void TickPreProcess();
-    void TickPostProcess();
 }
 
 #endif

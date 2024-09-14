@@ -27,20 +27,20 @@ int main() {
     glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, true);
 #endif
 
-    window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Minecraft", NULL, NULL);
+    Window::window = glfwCreateWindow(WINDOW_WIDTH, WINDOW_HEIGHT, "Minecraft", NULL, NULL);
 
-    if (window == nullptr) {
+    if (Window::window == nullptr) {
         std::cout << "Failed to create GLFW window" << std::endl;
         return -1;
     }
-    glfwMakeContextCurrent(window);
+    glfwMakeContextCurrent(Window::window);
 
     gladLoadGL();
+
+    EngineProcessor::Init();
     
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
-
-    EngineProcessor::Init();
 
 
     Camera camera(glm::vec3(0.0f, 0.0f, 20.0f), 0.0f, 0.0f, FOV, NEAR, FAR);
@@ -79,17 +79,17 @@ int main() {
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(Window::window)) {
+        glfwPollEvents();
         EngineProcessor::TickPreProcess();
 
-        glfwPollEvents();
+        Window::SetWindowCaption("Minecraft - FPS: " + std::to_string(Time::FPS));
 
         camera.UpdateProjectionMatrix();
         camera.Update();
 
         shaderProgram.SetUniform("viewPosition", camera.GetPosition());
 
-        EngineProcessor::TickPostProcess();
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         
@@ -101,7 +101,7 @@ int main() {
         shaderProgram.SetUniform("model", model);
         chunk.Draw();
 
-        glfwSwapBuffers(window);
+        glfwSwapBuffers(Window::window);
     }
 
 
