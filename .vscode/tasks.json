@@ -4,10 +4,16 @@
     "version": "2.0.0",
     "tasks": [
         {
-            "label": "Build & Run",
-            "type": "shell",
-            "command": "./BuildAndRun.sh",
-            "group": "build"
+            "type": "cmake",
+            "label": "Production Build",
+            "command": "cleanRebuild",
+            "targets": [
+                "all"
+            ],
+            "preset": "${command:cmake.activeBuildPresetName}",
+            "group": "build",
+            "problemMatcher": [],
+            "detail": "CMake template clean rebuild task"
         }
     ]
 }
